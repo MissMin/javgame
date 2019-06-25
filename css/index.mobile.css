@@ -32,6 +32,7 @@ input,button{
 	position: absolute;
 	left: calc(50% - 300px);
 	bottom: 0;
+	transform: scale(0.9)
 }
 
 .rule{
