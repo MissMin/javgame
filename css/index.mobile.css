@@ -39,6 +39,7 @@ input,button{
 	position: absolute;
 	top: 1rem;
 	right: 2rem;
+	z-index: 9999;
 }
 .rule img{
 	width: 100%;
