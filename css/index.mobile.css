@@ -1,0 +1,458 @@
+/* 初始化 */
+*{
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+html{
+	font-size: 10px;
+}
+body{
+	font-family: 'microsoft yahei';
+	width: 100%;
+	min-width: 600px;
+	height: 100%;
+	overflow-y: scroll;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background: url('../img/bg.png') no-repeat;
+	background-size: cover;
+}
+input,button{
+	outline: none;
+}
+::-webkit-scrollbar {
+	display: none;
+}
+
+#app{
+	width: 600px;
+	height: 100%;
+	position: absolute;
+	left: calc(50% - 300px);
+	bottom: 0;
+}
+
+.rule{
+	width: 10%;
+	position: absolute;
+	top: 1rem;
+	right: 2rem;
+}
+.rule img{
+	width: 100%;
+}
+
+.z1{
+	width: 100%;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	z-index: 1;
+}
+.z1 img{
+	width: 100%;
+}
+
+.z2{
+	width: 60%;
+	position: absolute;
+	bottom: -0.3rem;
+	left: 20%;
+	z-index: 2;
+}
+.z2 img{
+	width: 100%;
+}
+
+.z3{
+	z-index: 3;
+}
+.z4{
+	width: 60px;
+	position: absolute;
+	top: -2.8rem;
+	left: 0;
+}
+.z4 img{
+	width: 100%;
+}
+.button{
+	width: 30%;
+	position: absolute;
+	bottom: 2.5rem;
+	left: 34%;
+}
+.button img{
+	width: 100%;
+}
+
+.shizi{
+	position: absolute;
+	bottom: 0;
+	left: -50px;
+	z-index: 9;
+}
+.shizi .shiziImg{
+	width: 120px;
+	position: absolute;
+	bottom: 0;
+	left: 10px;
+}
+.shizisay{
+	width: 150px;
+	position: absolute;
+	left: -10px;
+	bottom: 150px;
+}
+.sayText{
+	width: 130px;
+	color: #FFFDE5;
+	position: absolute;
+	bottom: 183px;
+	left: 0px;
+	line-height: 1.6rem;
+}
+
+.contentLeft, .contentRight{
+	width: 220px;
+	height: 186px;
+	position: absolute;
+	bottom: 9.5rem;
+	left: 5rem;
+	z-index: 5;
+	background: url('../img/content.png') no-repeat;
+	background-size: cover;
+}
+.contentRight{
+	background: rgba(216, 187, 158, 1);
+	border-radius: 5px;
+	left: 25.5rem;
+	display: flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
+	align-content: space-around;
+}
+.contentLeft p{
+	width: 100%;
+	text-align: center;
+}
+.contentLeft p.text{
+	color: rgba(174, 102, 62, 1);
+	font-size: 1.4rem;
+	font-weight: bold;
+	margin-top: 18px;
+}
+.contentLeft p.money{
+	width: 80%;
+	margin-left: 10%;
+	padding: 5px 0;
+	margin-top: 10px;
+	color: #DC351E;
+	font-size: 2.2rem;
+	font-weight: bold;
+	background: linear-gradient(to right, #F6E4BD, #FDD27C, #FDD27C, #F6E4BD);
+}
+.contentLeft p.record{
+	color: #AE663E;
+	margin-top: 7px;
+	font-size: 1.2rem;
+	text-decoration: underline;
+}
+.dos{
+	width: 80%;
+	margin-left: 10%;
+	display: flex;
+	justify-content: space-around;
+	margin-top: 20px;
+}
+.dos div{
+	text-align: center;
+}
+.dos div a{
+	color: #ffffff;
+	display: inline-block;
+	padding: 6px 17px;
+	border-radius: 20px;
+	font-weight: bold;
+	font-size: 1.2rem;
+	cursor: pointer;
+}
+.dos div p{
+	font-size: 1rem;
+	color: #AE663E;
+	transform: scale(0.9);
+}
+.dos div:first-child a{
+	background: #A1C62E;
+}
+.dos div:last-child a{
+	background: #FCA31D;
+}
+
+
+.contentRight .box{
+	width: 60px;
+	height: 80px;
+	border-radius: 5px;
+	position: relative;
+}
+.contentRight .box.open{
+	background: url('../img/open.png') no-repeat;
+	background-size: cover;
+}
+.contentRight .box.canOpen{
+	background: url('../img/canOpen.png') no-repeat;
+	background-size: cover;
+}
+.contentRight .box.onclose{
+	background: url('../img/redpack.png') no-repeat;
+	background-size: cover;
+}
+.contentRight .box.canOpen img{
+	width: 32px;
+	position: absolute;
+	bottom: 0.4rem;
+	left: calc(50% - 14px);
+}
+.contentRight .box.canOpen p{
+	display: none;
+}
+.contentRight .box.open p{
+	color: #ffffff;
+	font-size: 1.2rem;
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	bottom: 1.2rem;
+	transform: scale(0.9)
+}
+
+.openPack{
+	animation: open forwards linear 1s;
+}
+@keyframes open{
+	0%{
+		transform: scale(1);
+	}
+	100%{
+		transform: scale(1);
+	}
+}
+
+
+.model{
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background: rgba(0, 0, 0, 0.6);
+	z-index: 999;
+	display: none;
+}
+.modelClose{
+	display: block;;
+	position: absolute;
+	top: 1.3rem;
+	right: 2.6rem;
+	z-index: 999;
+	width: 18px;
+	height: 18px;
+}
+.showRule, .showList{
+	width: 390px;
+	height: 320px;
+	position: fixed;
+	top: calc(50% - 160px);
+	left: calc(50% - 195px);
+	z-index: 1000;
+	background: url('../img/model.png') no-repeat;
+	background-size: cover;
+	display: none;
+	overflow-y: scroll;
+}
+.showRule p{
+	width: 90%;
+	margin-left: 5%;
+	color: #ae663e;
+	font-size: 1rem;
+	line-height: 1.5rem;
+	transform: scale(0.9);
+}
+.showRule p:first-of-type{
+	font-size: 1.6rem;
+	text-align: center;
+	margin-top: 1.5rem;
+	font-weight: bold;
+}
+.showRule p:nth-child(3){
+	margin-top: 0.7rem;
+}
+.showList > p:first-of-type{
+	width: 90%;
+	margin-left: 5%;
+	color: #ae663e;
+	line-height: 1.6rem;
+	transform: scale(0.9);
+	font-size: 1.8rem;
+	text-align: center;
+	margin-top: 1.5rem;
+	font-weight: bold;
+}
+.showList .listBox{
+	margin-top: 10px;
+	width: 100%;
+	height: 190px;
+	overflow-y: scroll;
+}
+.showList .listItem{
+	width: 70%;
+	margin-left: 15%;
+	padding: 7px 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	border-bottom: 1px solid rgba(172, 102, 62, 0.3);
+}
+.showList .listItem img{
+	width: 35px;
+	height: 35px;
+	border-radius: 50%;
+}
+.showList .listItem div{
+	position: relative;
+	left: -8%;
+}
+.showList .listItem div p:first-child{
+	color: #AE663E;
+	font-size: 1.4rem;
+}
+.showList .listItem div p:last-child{
+	color: #96938d;
+	font-size: 1.2rem;
+}
+.showList .listItem > p{
+	color: #f24724;
+	font-size: 1.4rem;
+}
+.showqrcode{
+	display: none;
+}
+.getMoneyModel{
+	width: 340px;
+	height: 270px;
+	background: url('../img/model2.png') no-repeat;
+	background-size: 100% 100%;
+	position: fixed;
+	top: calc(50% - 150px);
+	left: calc(50% - 185px);
+	z-index: 9999;
+	display: none;
+}
+.getMoneyModel .modelClose{
+	right: 1.5rem;
+}
+.getMoneyModelTitle{
+	text-align: center;
+	color: #AE663E;
+	font-weight: bold;
+	font-size: 16px;
+	margin-top: 4rem;
+}
+.getMoneyModelDes{
+	text-align: center;
+	color: #AE663E;
+	font-size: 14px;
+	margin-top: 3rem;
+}
+.getMoneyModelBtn{
+	width: 80%;
+	margin-left: 10%;
+	display: flex;
+	justify-content: space-around;
+	margin-top: 4rem;
+}
+.getMoneyModelBtn a{
+	display: inline-block;
+	padding: 8px 40px;
+	border-radius: 20px;
+	color: #ffffff;
+	font-size: 14px;
+}
+.getMoneyModelCancel{
+	background: #A1C62E;
+}
+.getMoneyModelSure{
+	background: #FAA21D;
+}
+.getMoneyModelBottom{
+	color: #AE663E;
+	font-size: 14px;
+	text-align: center;
+	margin-top: 1.5rem;
+	display: none;
+}
+.exchange{
+	width: 340px;
+	height: 270px;
+	background: url('../img/model2.png') no-repeat;
+	background-size: 100% 100%;
+	position: fixed;
+	top: calc(50% - 150px);
+	left: calc(50% - 185px);
+	z-index: 9999;
+	display: none;
+}
+.exchangeContent{
+	text-align: center;
+	margin-top: 30px;
+	color: #AE663E;
+	font-weight: bold;
+	font-size: 14px;
+}
+.exchangeContent input{
+	width: 80px;
+	background: rgb(215, 187, 163);
+	text-align: center;
+	border-radius: 5px;
+	color: red;
+	padding: 8px 10px;
+}
+.exchangeContent a{
+	background: #A1C62E;
+	color: #ffffff;
+	border-radius: 20px;
+	padding: 5px 20px;
+	margin-left: 10px;
+	font-size: 14px;
+	font-weight: normal;
+}
+.exchangeTitle{
+	text-align: center;
+	color: #AE663E;
+	font-weight: bold;
+	font-size: 16px;
+	margin-top: 4rem;
+}
+.exchangeBtn{
+	width: 80%;
+	margin-left: 10%;
+	display: flex;
+	justify-content: space-around;
+	margin-top: 4rem;
+}
+.exchangeBtn a{
+	display: inline-block;
+	padding: 8px 40px;
+	border-radius: 20px;
+	color: #ffffff;
+	font-size: 14px;
+}
+.exchangeCancel{
+	background: #A1C62E;
+}
+.exchangeSure{
+	background: #FAA21D;
+}
