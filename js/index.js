@@ -13,13 +13,21 @@ var importStyle = function(v){
 }
 importStyle(isPc());
 
+var dataEncode = function(v){
+	var formDate = new FormData();
+	for (k in v){
+		formDate.append(k, v[k]);
+	}
+	return formDate;
+}
+
 // JQ.
 $(document).ready(function(){
 	
 	// 通用模块
 	var common = {
 		// 接口地址
-		api: 'http://51v.com',
+		api: 'http://mhall.51v.cn/active',
 
 		dom: {
 			model: $('.model'),
@@ -118,31 +126,23 @@ $(document).ready(function(){
 			doms.all.on('click', function(){
 				doms.ipt.val(doms.money.text());
 			})
+			
 			doms.ipt.on('focus', function(){
 				doms.ipt.val('');
 			})
-			// doms.ipt.on('blur', function(){
-			// 	if($(this).val() == '' || parseInt($(this).val()) <= 0){
-			// 		layer.msg('兑换金额不能小于0.01');
-			// 	}
-			// 	if(parseInt($(this).val()) > parseInt(doms.money.text())){
-			// 		layer.msg('可兑换金额不足');
-			// 		doms.ipt.val(doms.money.text());
-			// 	}
-			// })
 			doms.sure.unbind();
 			doms.sure.on('click', function(){
-				console.log(doms.ipt.val(), typeof doms.ipt.val())
-				if(doms.ipt.val() == '' || parseInt(doms.ipt.val()) <= 0){
+				if(doms.ipt.val() == '' || parseFloat(doms.ipt.val()) <= 0){
 					layer.msg('兑换金额不能小于0.01');
 					return
 				}
-				if(parseInt(doms.ipt.val()) > parseInt(doms.money.text())){
+				if(parseFloat(doms.ipt.val()) > parseFloat(doms.money.text())){
 					layer.msg('可兑换金额不足');
 					doms.ipt.val(doms.money.text());
 					return
 				}
-				v() });
+				v()
+			});
 		},
 
 		// 跑马灯
@@ -160,17 +160,19 @@ $(document).ready(function(){
 			this.showList();
 		}
 	}
+	
+	
 	var shareBtn = $('.z3').find('img')
 	// 移动端
 	var mobile = {
 		jdk: {
-			to: 0,
-			title: '【福利】重！磅！消！息！',
-			desc: '红包福利人人领，邀请好友，万元红包等你拿',
-			isImg: 1,
-			needdParams: 1,
-			link: '',
-			imgUrl: ''
+			to: '{0}',
+			title: '{【福利】重！磅！消！息！}',
+			desc: '{红包福利人人领，邀请好友，万元红包等你拿}',
+			isImg: '{1}',
+			needdParams: '{1}',
+			link: '{}',
+			imgUrl: '{}'
 		},
 		shareApi: function(){
 			return 'uniwebview://share?to='+this.jdk.to+'&&title='+this.jdk.title+'&&desc='+this.jdk.desc+'&&isImg='+this.jdk.isImg+'&&needdParams='+this.jdk.needdParams+'&&link='+this.jdk.link+'&&imgUrl='+this.jdk.imgUrl
@@ -191,6 +193,13 @@ $(document).ready(function(){
 		shareEvent: function(){
 			var root = this;
 			shareBtn.on('click', function(){
+				$('#qrcode').empty();
+				$('#qrcode').qrcode({
+					render: 'canvas',
+					width: 140,
+					height: 140,
+					text: 'http://www.baidu.com'
+				});
 				common.dom.model.show();
 				root.showqrcode.show();
 				common.dom.model.on('click', function(e){
@@ -210,19 +219,194 @@ $(document).ready(function(){
 
 	// 数据
 	var getDate = {
-		
+		// 获取红包余额
+		getMoney: function(){
+			$.ajax({
+				type: 'post',
+				url: common.api + '/GetUserShareRedPacketAmount',
+				dataType: 'json',
+				success: function(r){
+					if(r.Code == 0){
+						$('.money').text(r.Data.amount);
+						if(r.Data.isOpen == 1){
+							$('.loadGet').find('p').text(r.Data.amount);
+							$('.model').show();
+							$('.loadGet').show();
+							$('.model').on('click', function(e){
+								if(e.target.className == 'model'){
+									$('.model').hide();
+									$('.loadGet').hide();
+									$('.model').unbind();
+								}
+							})
+						}
+					}else{
+						layer.msg(r.Nessage);
+					}
+				}
+			})
+		},
+		// 获取红包记录
+		getRedPacketRecord: function(){
+			var data = {
+				typeid: 2
+			}
+			$.ajax({
+				type: 'post',
+				url: common.api + '/GetUserShareRedPacketList',
+				dataType: 'json',
+				data: data,
+				success: function(r){
+					if(r.Code == 0){
+						var listBox = $('.redPacketListBox');
+						var item =$('.redPacketListItem');
+						for(var i=0; i<r.Data.length; i++){
+							var self = item.clone();
+							self.css('display', 'flex');
+							self.find('img').attr('src', r.Data[i].logo);
+							self.find('div').find('p').eq(0).text(r.Data[i].nickName);
+							self.find('div').find('p').eq(1).text(r.Data[i].writeDT);
+							self.find('.redPacketListMoney').text(r.Data[i].amount + '元');
+							listBox.append(self);
+						}
+					}else{
+						layer.msg(r.Nessage);
+					}
+				}
+			})
+		},
+		// 获取可拆红包
+		getRedPacketList: function(){
+			var data = {
+				typeid: 1
+			}
+			$.ajax({
+				type: 'post',
+				url: common.api + '/GetUserShareRedPacketList',
+				dataType: 'json',
+				data: data,
+				success: function(r){
+					if(r.Code == 0){
+						var contentRight = $('.contentRight');
+						var open = contentRight.find('.open');
+						var canopen = contentRight.find('.canOpen');
+						var onclose = contentRight.find('.onclose');
+						for(var i=0; i<r.Data.length; i++){
+							var item = null;
+							if(r.Data[i].isGet == 0){
+								item = canopen.clone();
+							}else{
+								item = open.clone();
+							}
+							item.css('display', 'block');
+							item.attr('index', i+1);
+							item.find('p').text(r.Data[i].amount);
+							contentRight.append(item);
+						}
+						for(var i=r.Data.length; i<10; i++){
+							item = onclose.clone();
+							item.css('display', 'block');
+							item.attr('index', i+1);
+							contentRight.append(item);
+						}
+						
+						// 拆红包
+						$('.canOpen').on('click', function(){
+							$(this).find('img').remove();
+							$(this).find('p').show();
+							$(this).removeClass('canOpen').addClass('open');
+						})
+					}else{
+						layer.msg(r.Nessage);
+					}
+				}
+			})
+		},
+		// 红包广播
+		getSlide: function(){
+			var cloak = null;
+			var run = function(){
+				$.ajax({
+					type: 'post',
+					url: common.api + '/GetLastReceviceShareRedPacketNotice',
+					dataType: 'json',
+					success: function(r){
+						if(r.Code == 0){
+							var slideUserName = $('.slideUserName');
+							var i = 0;
+							var setSlide = function(i){
+								slideUserName.text(r.Data[i].nickName);
+							}
+							setSlide(i)
+							cloak = setInterval(function(){
+								i++;
+								if(i == r.Data.length){
+									i = 0;
+								}
+								setSlide(i)
+							}, 3000)
+						}else{
+							layer.msg(r.Nessage);
+						}
+					}
+				})
+			}
+			run();
+			setInterval(function(){
+				clearInterval(cloak)
+				run()
+			}, 12000)
+		},
+		// 提现和兑换
+		exchange: function(type, v){
+			var data = {
+				typeid: type,
+				exChangeAmount: parseFloat(v)
+			}
+			$.ajax({
+				type: 'post',
+				url: common.api + '/ExChangeShareRedPacketToGold',
+				dataType: 'json',
+				data: data,
+				success: function(r){
+					if(r.Code == 0){
+						layer.msg( type == 3 ? '提现成功' : '兑换成功');
+						var num = parseFloat($('.money').text()) - parseFloat(v);
+						$('.money').text(num.toFixed(2));
+						$('.getMoneyModel').hide();
+						$('.model').hide();
+					}else{
+						layer.msg(r.Nessage);
+					}
+				}
+			})
+		},
+		use: function(){
+			this.getMoney();
+			this.getRedPacketRecord();
+			this.getRedPacketList();
+			this.getSlide();
+		}
 	}
+	
+	getDate.use()
+	
+	
 
 
 	// 提现
 	$('.getMoney').on('click', function(){
+		if(parseInt($('.money').text()) < 5){
+			layer.msg('红包余额不足');
+			return false;
+		}
 		common.showModel({
 			title: '提现5元',
 			des: '确定要提现5元现金吗？',
 			cancel: '取消',
 			sure: '确认提现',
 			callback: function(){
-				alert('0')
+				getDate.exchange(3, '0.05');
 			}
 		})
 	})
@@ -238,18 +422,10 @@ $(document).ready(function(){
 				cancel: '取消',
 				sure: '确认兑换',
 				callback: function(){
-					alert(1)
+					getDate.exchange(4, parseFloat($('.exchangeContent').find('input').val()));
 				}
 			})
 		})
-		
-	})
-
-	// 拆红包
-	$('.canOpen').on('click', function(){
-		$(this).find('img').remove();
-		$(this).find('p').show();
-		$(this).removeClass('canOpen').addClass('open');
 	})
 
 })

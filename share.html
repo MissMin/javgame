@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+	<title>分享</title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		body{
+			background: #000000;
+		}
+		#app{
+			width: 375px;
+			height: 667px;
+			position: absolute;
+			background: url('./img/linghongbao_di.jpg') no-repeat center;
+			background-size: cover;
+		}
+		.activeTime{
+			color: #ff4a26;
+			font-size: 12px;
+			font-weight: bold;
+			position: absolute;
+		}
+		img.downGame{
+			width: 50%;
+			position: absolute;
+			bottom: 13%;
+			left: 25%;
+		}
+		.showMoney{
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			background: rgba(0,0,0,0.7);
+			z-index: 2;
+			display: none;
+		}
+		.showBox{
+			width: 300px;
+			height: 300px;
+			background: url('./img/model2.png') no-repeat;
+			background-size: 100% 100%;
+			position: absolute;
+			top: calc(50% - 150px);
+			left: calc(50% - 150px);
+		}
+		.close{
+			width: 20px;
+			position: absolute;
+			top: 10px;
+			right: 13px;
+			z-index: 3;
+		}
+		.bg{
+			width: 280px;
+			height: 280px;
+			position: absolute;
+			top: 7px;
+			left: 10px;
+			z-index: 2;
+		}
+		.title{
+			text-align: center;
+			width: 100%;
+			color: #AF6D3D;
+			font-size: 18px;
+			font-weight: bold;
+			position: absolute;
+			top: 27px;
+			z-index: 3;
+		}
+		.rebPacket{
+			width: 34%;
+			position: absolute;
+			top: 73px;
+			left: 33%;
+			z-index: 3;
+		}
+		.moneyNum{
+			text-align: center;
+			width: 100%;
+			color: #FFFFFF;
+			font-size: 18px;
+			font-weight: bold;
+			position: absolute;
+			top: 155px;
+			z-index: 3;
+		}
+		.showBox button{
+			display: block;
+			width: 60%;
+			padding: 8px 0;
+			color: #FFFFFF;
+			background: #FCA41E;
+			border-radius: 20px;
+			position: absolute;
+			left: 20%;
+			bottom: 40px;
+			z-index: 3;
+			border: 0;
+			font-size: 16px;
+			outline: none;
+		}
+		.des{
+			width: 100%;
+			text-align: center;
+			font-size: 12px;
+			color: #838282;
+			position: absolute;
+			bottom: 10px;
+			line-height: 35px;
+			left: 0;
+			z-index: 3;
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<div class="activeTime">活动时间:2019.6.8-6.12</div>
+		<img src="./img/anniu_xiazaiyouxi.png" class="downGame" />
+
+		<div class="showMoney">
+			<div class="showBox">
+				<img class="close" src="./img/modelClose.png" />
+				<img class="bg" src="./img/bj02.jpg" />
+				<p class="title">恭喜获得</p>
+				<img class="rebPacket" src="./img/hongbao02.png" />
+				<p class="moneyNum">1.88元</p>
+				<button class="downGame">进入游戏领取</button>
+				<p class="des">首次参与活动还可以领取小金狮红包</p>
+			</div>
+		</div>
+	</div>
+
+	<script src="./js/axios.min.js"></script>
+	<script type="text/javascript">
+		// 屏幕适配，以iPhone6/7/8为基准，窄屏(如iPhone x)垂直居中，上下留空
+		var documentSize = {
+			width: document.documentElement.clientWidth,
+			height: document.documentElement.clientHeight
+		}
+		var app = document.querySelector('#app');
+		var activeTime = document.querySelector('.activeTime');
+
+		app.style.width = documentSize.width + 'px';
+		app.style.height = parseInt(documentSize.width / 375 * 667) + 'px';
+		app.style.top = (documentSize.height - parseInt(app.style.height)) * 0.5 + 'px';
+
+		// activeTime原始top: 62, right: 28
+		activeTime.style.transform = 'scale(' + documentSize.width/375 + ')';
+		activeTime.style.top = parseInt(app.style.top) == 0 ? documentSize.height/667*63 + 'px' : '62px';
+		activeTime.style.right = documentSize.width/375*30 + 'px';
+
+		var close = document.querySelector('.close');
+		var showMoney = document.querySelector('.showMoney');
+		var moneyNum = document.querySelector('.moneyNum');
+		close.onclick = function(){
+			showMoney.style.display = 'none';
+		}
+		
+		// 请求数据
+		axios.post('http://mhall.51v.cn/active/GetUserShareRedPacketAmount').then(function(r){
+			console.log(r)
+			if(r.data.Code == 0){
+				if(r.data.Data.isOpen == 1){
+					showMoney.style.display = 'block';
+					moneyNum.innerHTML = r.data.Data.amount;
+				}
+			}
+		})
+		document.onclick = function(e){
+			if(e.target.className == 'downGame'){
+				window.open('http://d.51v.com/' + location.search);
+			}
+		}
+	</script>
+</body>
+</html>
+

@@ -24,7 +24,7 @@
 		<div class="shizi">
 			<img src="img/shizi.png" class="shiziImg" alt="">
 			<img src="img/say.png" class="shizisay" alt="">
-			<div class="sayText">恭喜XXX，成功兑换5元现金红包，可喜可贺！</div>
+			<div class="sayText">恭喜<span class="slideUserName"></span>，成功兑换5元现金红包！</div>
 		</div>
 
 		<div class="contentLeft">
@@ -33,7 +33,7 @@
 			</div>
 
 			<p class="text">您当前红包余额</p>
-			<p class="money">4.80</p>
+			<p class="money"></p>
 			<p class="record"><span class="recordBtn">红包记录</span></p>
 			<div class="dos">
 				<div>
@@ -49,26 +49,14 @@
 			</div>
 		</div>
 		<div class="contentRight">
-			<div class="box open">
-				<p>1.88元</p>
+			<div class="box open" style="display: none" index="">
+				<p></p>
 			</div>
-			<div class="box canOpen">
+			<div class="box canOpen" style="display: none">
 				<img src="img/chai.png" alt="">
-				<p>1.88元</p>
+				<p></p>
 			</div>
-			<div class="box canOpen">
-				<img src="img/chai.png" alt="">
-				<p>1.88元</p>
-			</div>
-			<div class="box onclose">
-				
-			</div>
-			<div class="box onclose">
-				
-			</div>
-			<div class="box onclose">
-				
-			</div>
+			<div class="box onclose" style="display: none"></div>
 		</div>
 	</div>
 	<div class="model"></div>
@@ -87,52 +75,20 @@
 	<div class="showList">
 		<img src="img/modelClose.png" alt="" class="modelClose">
 		<p>红包记录</p>
-		<div class="listBox">
-			<div class="listItem">
+		<div class="listBox redPacketListBox">
+			<div class="listItem redPacketListItem" style="display: none">
 				<img src="img/bg.png" alt="">
 				<div>
-					<p>小狮子</p>
-					<p>2019-06-10 11:24:30</p>
+					<p></p>
+					<p></p>
 				</div>
-				<p>0.85元</p>
-			</div>
-			<div class="listItem">
-				<img src="img/bg.png" alt="">
-				<div>
-					<p>小狮子</p>
-					<p>2019-06-10 11:24:30</p>
-				</div>
-				<p>0.85元</p>
-			</div>
-			<div class="listItem">
-				<img src="img/bg.png" alt="">
-				<div>
-					<p>小狮子</p>
-					<p>2019-06-10 11:24:30</p>
-				</div>
-				<p>0.85元</p>
-			</div>
-			<div class="listItem">
-				<img src="img/bg.png" alt="">
-				<div>
-					<p>小狮子</p>
-					<p>2019-06-10 11:24:30</p>
-				</div>
-				<p>0.85元</p>
-			</div>
-			<div class="listItem">
-				<img src="img/bg.png" alt="">
-				<div>
-					<p>小狮子</p>
-					<p>2019-06-10 11:24:30</p>
-				</div>
-				<p>0.85元</p>
+				<p class="redPacketListMoney"></p>
 			</div>
 		</div>
 	</div>
 	<div class="showqrcode">
 		<img src="img/pcShare.png" class="pcshare" alt="">
-		<img src="img/qrcode.png" class="qrcode" alt="">
+		<div class="qrcode" id="qrcode"></div>
 	</div>
 	<div class="getMoneyModel">
 		<img src="img/modelClose.png" alt="" class="modelClose">
@@ -148,14 +104,18 @@
 		<img src="img/modelClose.png" alt="" class="modelClose">
 		<p class="exchangeTitle">兑换</p>
 		<p class="exchangeContent">
-			<input type="text" value="1.98" /> 元 <a class="all">全部</a>
+			<input type="text" value="0.0" /> 元 <a class="all">全部</a>
 		</p>
 		<p class="exchangeBtn">
 			<a class="exchangeCancel">取消</a>
 			<a class="exchangeSure">确定</a>
 		</p>
 	</div>
+	<div class="loadGet">
+		<p>1.80元</p>
+	</div>
 	<script src="./js/jquery.min.js"></script>
+	<script src="./js/jquery.qrcode.min.js"></script>
 	<script src="./layer/layer.js"></script>
 	<script src="./js/index.js"></script>
 </body>

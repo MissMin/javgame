@@ -133,9 +133,8 @@ input,button{
 	border-radius: 5px;
 	left: 25.5rem;
 	display: flex;
-	justify-content: space-around;
 	flex-wrap: wrap;
-	align-content: space-around;
+	overflow: scroll;
 }
 .contentLeft p{
 	width: 100%;
@@ -195,11 +194,13 @@ input,button{
 }
 
 
+
 .contentRight .box{
 	width: 60px;
 	height: 80px;
 	border-radius: 5px;
 	position: relative;
+	margin: 10px 6px;
 }
 .contentRight .box.open{
 	background: url('../img/open.png') no-repeat;
@@ -364,6 +365,9 @@ input,button{
 	left: 145px;
 	z-index: 2;
 }
+.showqrcode .qrcode img{
+	width: 100%;
+}
 .getMoneyModel{
 	width: 340px;
 	height: 270px;
@@ -481,4 +485,26 @@ input,button{
 }
 .exchangeSure{
 	background: #FAA21D;
+}
+
+.loadGet{
+	width: 235px;
+	height: 300px;
+	background: url('../img/hongbao01.png') no-repeat;
+	background-size: cover;
+	position: absolute;
+	top: calc(50% - 150px);
+	left: calc(50% - 100px);
+	z-index: 1000;
+	display: none;
+}
+.loadGet p{
+	width: 100%;
+	text-align: center;
+	color: #e04c36;
+	position: absolute;
+	top: 80px;
+	left: 0;
+	font-size: 14px;
+	font-weight: bold;
 }
